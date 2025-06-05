@@ -57,4 +57,10 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+    
+    public function cliente()
+    {
+        // Relación 1:1 (un usuario es un cliente)
+        return $this->hasOne(Cliente::class);
+    }
 }
