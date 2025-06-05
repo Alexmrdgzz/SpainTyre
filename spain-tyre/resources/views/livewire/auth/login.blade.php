@@ -33,7 +33,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
+                'email' => __('Error: Las credenciales no son válidas.'),
             ]);
         }
 
@@ -57,7 +57,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'email' => __('Error: Las credenciales no son válidas.', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
