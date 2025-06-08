@@ -8,7 +8,6 @@ use App\Models\Articulo;
 use App\Models\Neumatico;
 use App\Models\ProductoMontaje;
 
-
 class ProductoSeeder extends Seeder
 {
     /**
@@ -328,7 +327,7 @@ class ProductoSeeder extends Seeder
             'stock' => 28,
             'url_imagen' => 'images/articulos/neumaticos/michelin_agilis_crossclimate_225_55_17C.jpg'
         ]);
-
+        
         Neumatico::create([
             'id_neumatico' => $neumaticoF6->id,
             'modelo' => 'Agilis CrossClimate',
@@ -433,7 +432,7 @@ class ProductoSeeder extends Seeder
         ]);
 
         Neumatico::create([
-            'id_neumatico' => $neumaticoC4->id,
+            'id_neumatico' => $neumaticoC4->id, 
             'modelo' => 'M-STEER 001',
             'ancho' => 315,
             'perfil' => 80,
@@ -521,7 +520,7 @@ class ProductoSeeder extends Seeder
             'descripcion' => 'Válvula estándar para neumáticos de turismos y furgonetas',
             'precio' => 1.30,
             'stock' => 500,
-            'url_imagen' => 'images/articulos/montaje/valvula_tiptop.jpg'
+            'url_imagen' => 'images/articulos/productosMontaje/valvula_tiptop.jpg'
         ]);
 
         ProductoMontaje::create([
@@ -536,7 +535,7 @@ class ProductoSeeder extends Seeder
             'descripcion' => 'Tiras de contrapesos adhesivos para equilibrar ruedas',
             'precio' => 3.20,
             'stock' => 500,
-            'url_imagen' => 'images/articulos/montaje/contrapesos_sio.jpg'
+            'url_imagen' => 'images/articulos/productosMontaje/contrapesos_sio.jpg'
         ]);
 
         ProductoMontaje::create([

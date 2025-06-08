@@ -13,13 +13,13 @@ class Articulo extends Model
     public function neumatico()
     {
         // Si es un neumático, esta relación será válida
-        return $this->hasOne(Neumatico::class);
+        return $this->hasOne(Neumatico::class, 'id_neumatico', 'id');
     }
 
     public function productoMontaje()
     {
         // Si es un articulo de montaje, esta relación será válida
-        return $this->hasOne(ProductoMontaje::class);
+        return $this->hasOne(ProductoMontaje::class, 'id_producto_montaje', 'id');
     }
 
     public function detalleCarrito()

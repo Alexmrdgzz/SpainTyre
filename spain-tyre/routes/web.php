@@ -2,10 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+use App\Livewire\Catalogo;
+use App\Http\Controllers\ArticuloController;
+
+// Verified comprueba si has autenticado tu email, pero está deshabilitado por defecto.
 
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('bienvenida');
+
+Route::get('/home', Catalogo::class)
+    ->middleware('auth')
+    ->name('home');
+
+Route::get('/articulo/{id}', [ArticuloController::class, 'show'])->name('articulos.show');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

@@ -12,6 +12,12 @@
             </a>
             
             <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item icon="home" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
+                    {{ __('Catálogo') }}
+                </flux:navbar.item>
+            </flux:navbar>
+
+            <flux:navbar class="-mb-px max-lg:hidden">
                 <flux:navbar.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Panel de Control') }}
                 </flux:navbar.item>
@@ -80,6 +86,10 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Menú de Navegación')">
+                    <flux:navlist.item icon="home" :href="route('home')" :current="request()->routeIs('home')" wire:navigate>
+                    {{ __('Catálogo') }}
+                    </flux:navlist.item>
+                    
                     <flux:navlist.item icon="layout-grid" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Panel de Control') }}
                     </flux:navlist.item>
@@ -91,7 +101,7 @@
         </flux:sidebar>
 
         {{ $slot }}
-
+        
         @fluxScripts
     </body>
 </html>
