@@ -61,14 +61,23 @@ class User extends Authenticatable
     public function cliente()
     {
         // Relación 1:1 (un usuario es un cliente)
-        return $this->hasOne(Cliente::class);
+        return $this->hasOne(Cliente::class, 'id_cliente', 'id');
     }
 
+    /**
+     * Relación 1:1 a través de Cliente para obtener el Carrito del Usuario
+     * Un usuario tiene un carrito a través de su cliente.
+     * Necesaria para poder crear el carrito automáticamente al crear un usuario.
+     */
     public function carrito()
     {
         return $this->hasOneThrough(Carrito::class, Cliente::class, 'id', 'cliente_id', 'id', 'id');
     }
 
+    /**
+     * Funcion que se ejecuta al crear un usuario para crear un cliente y un carrito
+     *
+     */
     protected static function boot()
     {
         parent::boot();

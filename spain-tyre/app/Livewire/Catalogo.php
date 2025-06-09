@@ -5,8 +5,6 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Articulo;
-use App\Models\Neumatico;
-use App\Models\ProductoMontaje;
 
 class Catalogo extends Component
 {

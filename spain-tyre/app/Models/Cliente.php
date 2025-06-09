@@ -22,7 +22,7 @@ class Cliente extends Model
     public function user()
     {
         // Este cliente pertenece a un usuario (1:1)
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'id_cliente', 'id');
     }
 
     public function pedidos()

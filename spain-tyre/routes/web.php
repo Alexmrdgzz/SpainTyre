@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use App\Livewire\Catalogo;
-use App\Http\Controllers\ArticuloController;
+use App\Livewire\DetalleArticulo;
+use App\Http\Controllers\CarritoController;
+
 
 // Verified comprueba si has autenticado tu email, pero está deshabilitado por defecto.
 
@@ -15,7 +17,9 @@ Route::get('/home', Catalogo::class)
     ->middleware('auth')
     ->name('home');
 
-Route::get('/articulo/{id}', [ArticuloController::class, 'show'])->name('articulos.show');
+Route::get('/articulo/{id}', DetalleArticulo::class)->name('articulos.show');
+
+Route::post('/carrito/agregar/{id}', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
