@@ -25,5 +25,11 @@ class Carrito extends Model
         // Le decimos que este carrito pertenece al cliente cuyo id_cliente coincide con id_carrito
         return $this->belongsTo(Cliente::class, 'id_carrito', 'id_cliente');
     }
+
+    // Relación con detalle_carrito (los artículos que contiene el carrito).
+    public function detalles()
+    {
+        return $this->hasMany(DetalleCarrito::class, 'id_carrito', 'id_carrito');
+    }  
     
 }

@@ -14,8 +14,9 @@ class DetalleArticulo extends Component
         $this->articulo = Articulo::with(['neumatico', 'productoMontaje'])->findOrFail($id);
     }
 
+    // Metodo para renderizar la vista del detalle del artículo
     public function render()
     {
-        return view('livewire.detalle-articulo')->layout('components.layouts.app');
+        return view('articulo.detalle-articulo');
     }
 }

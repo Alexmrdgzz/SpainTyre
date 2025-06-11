@@ -9,7 +9,7 @@
         </a>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-6 bg-gray-200 dark:bg-gray-600 p-6 rounded-lg">
+    <div class="flex flex-col md:flex-row gap-6 bg-gray-200 dark:bg-gray-900 p-6 rounded-lg">
         {{-- Imagen --}}
         <div class="md:w-2/5 flex justify-center items-center">
             @if($articulo->url_imagen)
@@ -89,6 +89,22 @@
                     <script>
                         setTimeout(() => {
                             const msg = document.getElementById('success-message');
+                            if (msg) {
+                                msg.style.transition = 'opacity 0.5s ease';
+                                msg.style.opacity = '0';
+                                setTimeout(() => msg.remove(), 500);
+                            }
+                        }, 2000);
+                    </script>
+                @elseif(session('error'))
+                    <div id="error-message" class="p-2 bg-red-200 text-red-800 rounded text-sm w-max">
+                        {{ session('error') }}
+                    </div>
+
+                    {{-- Script para hacer que el mensaje desaparezca pasados dos segundos --}}
+                    <script>
+                        setTimeout(() => {
+                            const msg = document.getElementById('error-message');
                             if (msg) {
                                 msg.style.transition = 'opacity 0.5s ease';
                                 msg.style.opacity = '0';

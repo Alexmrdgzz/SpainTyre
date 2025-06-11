@@ -8,12 +8,13 @@ use App\Models\Articulo;
 
 class Catalogo extends Component
 {
-
+    
     public $tipo = 'neumaticos'; // Categoria seleccionada por defecto
     public $vehiculo = null;     // Tipo de vehiculo seleccionado : turismo, camion, furgoneta o null (todos)
 
     use WithPagination;
 
+    // Metodo para renderizar la vista del catálogo
     public function render()
     {
         if ($this->tipo === 'neumaticos') {
@@ -30,7 +31,7 @@ class Catalogo extends Component
             $articulos = Articulo::whereHas('productoMontaje')->paginate(6);
         }
 
-        return view('livewire.catalogo', compact('articulos'));
+        return view('catalogo.ver-catalogo', compact('articulos'));
     }
 
     // Reiniciar paginación al cambiar tipo de producto, el metodo se llama automáticamente al cambiar el tipo de producto

@@ -33,18 +33,18 @@
                                 </li>
                                 <li>
                                     <button
-                                        wire:click="$set('vehiculo', 'camion')"
-                                        class="w-full text-left text-xs px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-800 {{ $vehiculo === 'camion' ? 'underline font-semibold text-blue-800 dark:text-blue-300' : '' }}"
-                                    >
-                                        Camiones
-                                    </button>
-                                </li>
-                                <li>
-                                    <button
                                         wire:click="$set('vehiculo', 'furgoneta')"
                                         class="w-full text-left text-xs px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-800 {{ $vehiculo === 'furgoneta' ? 'underline font-semibold text-blue-800 dark:text-blue-300' : '' }}"
                                     >
                                         Furgonetas
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        wire:click="$set('vehiculo', 'camion')"
+                                        class="w-full text-left text-xs px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-800 {{ $vehiculo === 'camion' ? 'underline font-semibold text-blue-800 dark:text-blue-300' : '' }}"
+                                    >
+                                        Camiones
                                     </button>
                                 </li>
                             </ul>

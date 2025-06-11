@@ -13,12 +13,12 @@ class Pedido extends Model
     public function cliente()
     {
         // Un pedido pertenece a un cliente concreto
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class, 'id_cliente', 'id_cliente');
     }
 
     public function detalles()
     {
         // Un pedido puede tener muchos detalles de varios artículos
-        return $this->hasMany(DetallePedido::class);
+        return $this->hasMany(DetallePedido::class, 'id_pedido', 'id');
     }
 }
