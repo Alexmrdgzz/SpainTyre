@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cliente');
             $table->decimal('total', 8, 2);
             $table->timestamp('fecha_pedido')->useCurrent();
-            $table->string('estado')->default('pendiente');
+            $table->string('estado')->default('Completado');
             $table->foreign('id_cliente')->references('id_cliente')->on('clientes')->onDelete('cascade');
             
             $table->timestamps();

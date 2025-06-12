@@ -28,7 +28,7 @@ class Cliente extends Model
     public function pedidos()
     {
         // Un cliente puede tener muchos pedidos
-        return $this->hasMany(Pedido::class);
+        return $this->hasMany(Pedido::class, 'id_cliente', 'id_cliente');
     }
 
     public function carrito()

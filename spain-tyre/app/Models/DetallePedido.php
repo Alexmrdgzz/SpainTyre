@@ -19,6 +19,6 @@ class DetallePedido extends Model
     public function articulo()
     {
         // Un detalle de pedido está ligado a un artículo concreto
-        return $this->belongsTo(Articulo::class, 'id_articulo', 'id_articulo');
+        return $this->belongsTo(Articulo::class, 'id_articulo', 'id');
     }
 }

@@ -77,4 +77,5 @@ class PedidoController extends Controller
             return redirect()->back()->with('error', 'Error al procesar el pedido.');
         }
     }
+    
 }
