@@ -6,7 +6,6 @@
     <title>{{ $title ?? 'Spain Tyre' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <script src="//unpkg.com/alpinejs" defer></script>
 </head>
 
 <body class="bg-gray-50 text-gray-900 dark:bg-gray-800 dark:text-gray-100 min-h-screen flex flex-col">

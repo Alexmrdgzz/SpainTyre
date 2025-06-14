@@ -95,7 +95,7 @@
                     <h2 class="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">Resumen</h2>
                     <div class="space-y-2 text-gray-900 dark:text-gray-100 text-lg">
                         <div class="flex justify-between">
-                            <span>Subtotal (sin IVA):</span>
+                            <span>Subtotal:</span>
                             <span>{{ number_format($subtotal, 2) }} €</span>
                         </div>
                         <div class="flex justify-between">
