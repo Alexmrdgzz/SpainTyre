@@ -1,8 +1,27 @@
 @extends('dashboard.index')
 @section('contenido')
 <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">📦 Mis pedidos</h1>
+
+{{-- Mensaje de éxito al realizar un pedido --}}
+@if (session('success'))
+    <div 
+        x-data="{ show: true }" 
+        x-show="show" 
+        class="mb-4 p-4 rounded bg-green-100 text-green-800 border border-green-300 relative"
+    >
+        <p>{{ session('success') }}</p>
+        <button 
+            @click="show = false" 
+            class="absolute top-2 right-2 text-green-800 hover:text-green-900 font-bold text-2xl leading-none"
+            aria-label="Cerrar mensaje"
+        >
+            &times;
+        </button>
+    </div>
+@endif
+
 <div class="w-full mx-auto px-4 py-6 bg-gray-300 dark:bg-transparent rounded-lg">
-    <div class="max-h-[500px] overflow-y-auto pr-4">
+    <div class="max-h-[540px] overflow-y-auto pr-4">
         {{-- Muestra la lista o un mensaje y un botón que lleva hasta el catalogo si aun no hay pedidos --}}
         @forelse ($pedidos as $pedido)
             <div class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg shadow-md mb-6 p-4">
@@ -43,6 +62,22 @@
                             </div>
                         </div>
                     @endforeach
+
+                    {{-- Mostrar gastos de envío --}}
+                    <div class="py-3 flex justify-between items-center font-semibold text-gray-900 dark:text-gray-200">
+                        <div>
+                            <p class="text-base font-medium">
+                                Gastos de envío
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            @if (($pedido->precio_envio ?? 0) == 0)
+                                Gratis
+                            @else
+                                {{ number_format($pedido->precio_envio, 2) }} €
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         @empty

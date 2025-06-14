@@ -1,6 +1,6 @@
 @extends('dashboard.index')
 @section('contenido')
-<h1 class="text-2xl font-bold mb-4">Bienvenido/a, {{ Auth::user()->name }}</h1>
+<h1 class="text-2xl font-bold mb-4">👋 Bienvenido/a, {{ Auth::user()->name }}</h1>
 <p class="mb-4">Desde este panel puedes gestionar tus pedidos y revisar tu información personal.</p>
 
 {{-- Resumen de pedidos --}}

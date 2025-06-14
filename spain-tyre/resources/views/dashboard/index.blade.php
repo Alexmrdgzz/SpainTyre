@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="w-full mx-auto px-4 py-6 bg-gray-300 dark:bg-transparent rounded-lg">
-    <div class="flex flex-col md:flex-row gap-6 bg-gray-200 dark:bg-gray-900 p-6 rounded-lg h-[600px]">
+    <div class="flex flex-col md:flex-row gap-6 bg-gray-200 dark:bg-gray-900 p-6 rounded-lg h-[720px]">
         {{-- Menú lateral --}}
         <aside class="w-full md:w-1/4 bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-4">
             <h2 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Menú</h2>

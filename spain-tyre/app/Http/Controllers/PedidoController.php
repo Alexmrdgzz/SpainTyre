@@ -20,6 +20,14 @@ class PedidoController extends Controller
         try {
             $cliente = Auth::user()->cliente;
 
+            // Comprueba si el cliente tiene DNI y dirección
+            // Si no los tiene, redirige al formulario de datos personales
+            if (empty($cliente->dni)) {
+                return redirect()
+                ->route('dashboard.datos-cliente')
+                ->with('danger', '⚠️ Por favor, completa tu DNI y dirección antes de realizar un pedido.');
+            }
+
             // Obtener el carrito del cliente
             $carrito = $cliente->carrito;
 
@@ -38,19 +46,20 @@ class PedidoController extends Controller
             }
 
             // Cálculo del envío
-            $envio = $totalArticulos >= 200 ? 0 : 12.99;
+            $precio_envio = $totalArticulos >= 200 ? 0 : 12.99;
 
             // Total final del pedido
-            $totalFinal = $totalArticulos + $envio;
+            $totalFinal = $totalArticulos + $precio_envio;
 
             // Crear el pedido
             $pedido = Pedido::create([
                 'id_cliente' => $cliente->id_cliente,
                 'fecha_pedido' => Carbon::now(),
                 'total' => $totalFinal,
+                'precio_envio' => $precio_envio
             ]);
             
-            // Crear los detalles del pedido
+            // Crear los detalles del pedido y actualizar el stock
             foreach ($detalles as $detalle) {
                 DetallePedido::create([
                     'id_pedido' => $pedido->id,
@@ -58,23 +67,26 @@ class PedidoController extends Controller
                     'cantidad' => $detalle->cantidad,
                     'precio_unitario' => $detalle->articulo->precio,
                 ]);
-            }
 
-            // Actualizar stock del artículo restando la cantidad pedida
-            $articulo = $detalle->articulo;
-            $articulo->stock -= $detalle->cantidad;
-            $articulo->save();
+                // Actualizar stock de cada artículo
+                $articulo = $detalle->articulo;
+                $articulo->stock -= $detalle->cantidad;
+                $articulo->save();
+            }
 
             // Vaciar el carrito
             $carrito->detalles()->delete();
 
             DB::commit();
 
-            return redirect()->route('home')->with('success', 'Pedido realizado con éxito.');
+            return redirect()->route('dashboard.mostrar-pedidos')
+                ->with('success', '✅ El pedido se ha realizado correctamente.');
 
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', 'Error al procesar el pedido.');
+            return redirect()
+            ->back()
+            ->with('error', 'Error al procesar el pedido.');
         }
     }
     

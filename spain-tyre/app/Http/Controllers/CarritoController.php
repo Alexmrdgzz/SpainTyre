@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Articulo;
-use App\Models\Carrito;
 use App\Models\DetalleCarrito;
 use Illuminate\Support\Facades\Auth;
 

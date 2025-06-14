@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('total', 8, 2);
             $table->timestamp('fecha_pedido')->useCurrent();
             $table->string('estado')->default('Completado');
+            $table->decimal('precio_envio', 8, 2);
             $table->foreign('id_cliente')->references('id_cliente')->on('clientes')->onDelete('cascade');
             
             $table->timestamps();
