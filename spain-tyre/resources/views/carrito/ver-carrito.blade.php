@@ -6,6 +6,26 @@
 
         <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">Mi Cesta</h1>
 
+       {{-- Mensaje de error --}}
+        @if(session('error'))
+            <div 
+                x-data="{ show: true }" 
+                x-show="show" 
+                class="mb-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+                role="alert"
+            >
+                <strong class="font-bold">Error: </strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+                <button 
+                    @click="show = false" 
+                    class="absolute top-2 right-2 text-red-700 hover:text-red-900 font-bold text-2xl leading-none"
+                    aria-label="Cerrar mensaje"
+                >
+                    &times;
+                </button>
+            </div>
+        @endif
+        
         <div class="flex flex-col md:flex-row gap-6">
 
             {{-- Listado de artículos --}}

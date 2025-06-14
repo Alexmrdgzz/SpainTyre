@@ -59,6 +59,37 @@
                             Productos de Montaje
                         </button>
                     </li>
+                    @if ($tipo === 'neumaticos' && $todasLasMarcas->isNotEmpty())
+                        <li class="mt-4 pt-4 border-t border-gray-300 dark:border-gray-600">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Marcas</h3>
+                            <ul class="space-y-1">
+                                <li>
+                                    <button
+                                        wire:click="$set('marca', null)"
+                                        class="w-full text-left text-xs px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-800 {{ $marca === null ? 'underline font-semibold text-blue-800 dark:text-blue-300' : '' }}"
+                                    >
+                                        Todas las marcas
+                                    </button>
+                                </li>
+                                @foreach ($todasLasMarcas as $marcaItem)
+                                    <li>
+                                        @if(!in_array($marcaItem, $marcasDisponibles) && $marca !== $marcaItem)
+                                            <span class="w-full text-left text-xs px-2 py-1 rounded opacity-60 cursor-not-allowed text-gray-400 dark:text-gray-500">
+                                                {{ $marcaItem }} <span class="text-gray-400 text-xs">(no disponible)</span>
+                                            </span>
+                                        @else
+                                            <button
+                                                wire:click="$set('marca', '{{ $marcaItem }}')"
+                                                class="w-full text-left text-xs px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-800 {{ $marca === $marcaItem ? 'underline font-semibold text-blue-800 dark:text-blue-300' : '' }}"
+                                            >
+                                                {{ $marcaItem }}
+                                            </button>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -97,7 +128,7 @@
                         <div class="mt-auto flex justify-start items-center">
                             <span class="font-bold text-lg text-green-600 dark:text-green-400">
                                 {{ number_format($articulo->precio, 2) }}€
-                                @if($articulo->stock === 0)
+                                @if($articulo->stock <= 0)
                                     <span class="text-red-600 font-semibold text-sm ml-2">(Agotado)</span>
                                 @endif
                             </span>

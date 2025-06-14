@@ -8,42 +8,68 @@ use App\Models\Articulo;
 
 class Catalogo extends Component
 {
-    
-    public $tipo = 'neumaticos'; // Categoria seleccionada por defecto
-    public $vehiculo = null;     // Tipo de vehiculo seleccionado : turismo, camion, furgoneta o null (todos)
-
     use WithPagination;
-
-    // Metodo para renderizar la vista del catálogo
+    
+    public $tipo = 'neumaticos';
+    public $vehiculo = null;
+    public $marca = null;
+    
     public function render()
     {
         if ($this->tipo === 'neumaticos') {
-            $query = Articulo::whereHas('neumatico');
-
-            if ($this->vehiculo) {
-                $query = $query->whereHas('neumatico', function ($q) {
-                    $q->where('tipo_vehiculo', $this->vehiculo);
+            $query = Articulo::whereHas('neumatico')
+                ->when($this->vehiculo, function ($q) {
+                    $q->whereHas('neumatico', function ($q) {
+                        $q->where('tipo_vehiculo', $this->vehiculo);
+                    });
+                })
+                ->when($this->marca, function ($q) {
+                    $q->where('marca', $this->marca);
                 });
-            }
 
             $articulos = $query->paginate(6);
+            
+            // Obtener todas las marcas de neumáticos
+            $todasLasMarcas = Articulo::whereHas('neumatico')
+                ->select('marca')
+                ->distinct()
+                ->orderBy('marca')
+                ->pluck('marca');
+                
+            // Obtener disponibilidad por marca para el vehículo actual
+            $marcasDisponibles = Articulo::whereHas('neumatico', function($q) {
+                    if ($this->vehiculo) {
+                        $q->where('tipo_vehiculo', $this->vehiculo);
+                    }
+                })
+                ->select('marca')
+                ->distinct()
+                ->pluck('marca')
+                ->toArray();
+
         } else {
             $articulos = Articulo::whereHas('productoMontaje')->paginate(6);
+            $todasLasMarcas = collect();
+            $marcasDisponibles = [];
         }
 
-        return view('catalogo.ver-catalogo', compact('articulos'));
+        return view('catalogo.ver-catalogo', [
+            'articulos' => $articulos,
+            'todasLasMarcas' => $todasLasMarcas,
+            'marcasDisponibles' => $marcasDisponibles
+        ]);
     }
 
-    // Reiniciar paginación al cambiar tipo de producto, el metodo se llama automáticamente al cambiar el tipo de producto
     public function updatedTipo()
     {
-        $this->vehiculo = null; // reseteamos filtro vehículo si no es neumatico
+        // Solo resetear marca si cambiamos a algo que no sean neumáticos
+        if ($this->tipo !== 'neumaticos') {
+            $this->marca = null;
+        }
         $this->resetPage();
     }
 
-    // Reiniciar paginación al cambiar tipo de vehículo, el metodo se llama automáticamente al cambiar el tipo de vehículo
-    public function updatedVehiculo()
-    {
+    public function updatedVehiculo() {
         $this->resetPage();
     }
 

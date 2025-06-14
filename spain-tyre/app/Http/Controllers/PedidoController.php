@@ -61,6 +61,36 @@ class PedidoController extends Controller
             
             // Crear los detalles del pedido y actualizar el stock
             foreach ($detalles as $detalle) {
+
+                $articulo = $detalle->articulo;
+
+                // Verificar stock disponible
+                if ($articulo->stock < $detalle->cantidad) {
+                    if ($articulo->stock > 0) {
+                        // Si aún hay stock, actualiza la cantidad del carrito
+                        DetalleCarrito::where('id_carrito', $detalle->id_carrito)
+                            ->where('id_articulo', $detalle->id_articulo)
+                            ->update(['cantidad' => $articulo->stock]);
+
+                        DB::commit();
+                        
+                        return redirect()
+                            ->back()
+                            ->with('error', "⚠️ La cantidad de '{$articulo->nombre}' ha sido ajustada a {$articulo->stock} unidad(es) disponibles.");
+                    } else {
+                        // Si ya no hay stock, elimina el detalle del carrito
+                        DetalleCarrito::where('id_carrito', $detalle->id_carrito)
+                        ->where('id_articulo', $detalle->id_articulo)
+                        ->delete();
+
+                        DB::commit();
+
+                        return redirect()
+                            ->back()
+                            ->with('error', "❌ El artículo '{$articulo->nombre}' ya no está disponible y ha sido eliminado de tu carrito.");
+                    }
+                }
+
                 DetallePedido::create([
                     'id_pedido' => $pedido->id,
                     'id_articulo' => $detalle->id_articulo,
@@ -69,7 +99,6 @@ class PedidoController extends Controller
                 ]);
 
                 // Actualizar stock de cada artículo
-                $articulo = $detalle->articulo;
                 $articulo->stock -= $detalle->cantidad;
                 $articulo->save();
             }
@@ -86,7 +115,7 @@ class PedidoController extends Controller
             DB::rollback();
             return redirect()
             ->back()
-            ->with('error', 'Error al procesar el pedido.');
+            ->with('error', '❌ Error al procesar el pedido: ' . $e->getMessage());
         }
     }
     
