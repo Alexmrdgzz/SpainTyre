@@ -61,11 +61,15 @@ Route::get('/dashboard/mis-datos', [DashboardController::class, 'datosCliente'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard.datos-cliente');
 
+// Ruta para ver la sección de soporte
+Route::get('/dashboard/soporte', function () {
+    return view('dashboard.soporte');
+    })->name('dashboard.soporte');
+
 // Ruta para actualizar los datos del cliente autenticado
 Route::put('/cliente/actualizar-datos', [ClienteController::class, 'actualizarDatos'])
     ->middleware(['auth', 'verified'])
     ->name('cliente.actualizar-datos');
-
 
 // Rutas de configuración del cliente autenticado
 Route::middleware(['auth'])->group(function () {
