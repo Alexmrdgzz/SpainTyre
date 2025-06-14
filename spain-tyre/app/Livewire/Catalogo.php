@@ -48,9 +48,22 @@ class Catalogo extends Component
                 ->toArray();
 
         } else {
-            $articulos = Articulo::whereHas('productoMontaje')->paginate(6);
-            $todasLasMarcas = collect();
-            $marcasDisponibles = [];
+            $query = Articulo::whereHas('productoMontaje')
+            ->when($this->marca, function ($q) {
+                $q->where('marca', $this->marca);
+            });
+
+            $articulos = $query->paginate(6);
+            
+            // Obtener todas las marcas de productos de montaje
+            $todasLasMarcas = Articulo::whereHas('productoMontaje')
+                ->select('marca')
+                ->distinct()
+                ->orderBy('marca')
+                ->pluck('marca');
+                
+            // Para productos de montaje, todas las marcas están disponibles
+            $marcasDisponibles = $todasLasMarcas->toArray();
         }
 
         return view('catalogo.ver-catalogo', [
@@ -62,7 +75,7 @@ class Catalogo extends Component
 
     public function updatedTipo()
     {
-        // Solo resetear marca si cambiamos a algo que no sean neumáticos
+        // Solo resetea la marca si cambiamos el tipo de producto.
         if ($this->tipo !== 'neumaticos') {
             $this->marca = null;
         }

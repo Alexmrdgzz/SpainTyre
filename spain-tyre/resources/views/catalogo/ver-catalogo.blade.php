@@ -59,7 +59,7 @@
                             Productos de Montaje
                         </button>
                     </li>
-                    @if ($tipo === 'neumaticos' && $todasLasMarcas->isNotEmpty())
+                    @if (($tipo === 'neumaticos' || $tipo === 'montajes') && $todasLasMarcas->isNotEmpty())
                         <li class="mt-4 pt-4 border-t border-gray-300 dark:border-gray-600">
                             <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Marcas</h3>
                             <ul class="space-y-1">
@@ -73,7 +73,7 @@
                                 </li>
                                 @foreach ($todasLasMarcas as $marcaItem)
                                     <li>
-                                        @if(!in_array($marcaItem, $marcasDisponibles) && $marca !== $marcaItem)
+                                        @if(!in_array($marcaItem, $marcasDisponibles) && $marca !== $marcaItem && $tipo === 'neumaticos')
                                             <span class="w-full text-left text-xs px-2 py-1 rounded opacity-60 cursor-not-allowed text-gray-400 dark:text-gray-500">
                                                 {{ $marcaItem }} <span class="text-gray-400 text-xs">(no disponible)</span>
                                             </span>
