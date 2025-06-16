@@ -114,8 +114,8 @@ class PedidoController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()
-            ->back()
-            ->with('error', '❌ Error al procesar el pedido: ' . $e->getMessage());
+                ->back()
+                ->with('error', '❌ Error al procesar el pedido: ' . $e->getMessage());
         }
     }
     

@@ -105,6 +105,11 @@ class CarritoController extends Controller
         return view('carrito.ver-carrito', compact('detalles', 'subtotal', 'iva', 'gastosEnvio', 'total'));
     }
 
+    /**
+     * Elimina un detalle del carrito
+     * 
+     * @return Vista del carrito con el detalle eliminado
+     */
     public function eliminarDetalle($carritoId, $articuloId)
     {
         // Hay que borrarlo asi porque la clave primaria es compuesta y no se puede usar el método delete() directamente.
